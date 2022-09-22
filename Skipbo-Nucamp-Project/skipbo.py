@@ -1,4 +1,55 @@
-# shuffle the deck
+import random as r
+
+
+# shuffle the deck (144 cards numbered 1-12)(twelve 1's, twelve 2's,..., twelve 12's)(18 skipbo cards)
+class player:
+    hand = []
+    discard = {"d1":[],"d2":[],"d3":[],"d4":[]}
+    top_dcards = [self.discard["d1"][-1],self.discard["d2"][-1],self.discard["d3"][-1],self.discard["d4"][-1]]
+
+    def __init__(self):
+        self.name = input("Please choose your player name:")
+
+    def play_build(card):
+        # play a card from your hand, top_draw_card, or discard pile
+        pass
+
+    def draw():
+        # draw from deck till hand length = 5
+        pass
+
+    def discard():
+        # discard one card from hand to end your turn
+        pass
+
+class draw_build:
+    deck_iter = generate_deck_iter()
+    top_draw = next(deck_iter)
+    build = {"b1":[],"b2":[],"b3":[],"b4":[]}
+
+    def generate_deck_iter(self):
+        deck_list = []
+        for i in range(1,12):
+            deck_list.extend([str(i)]*12)
+
+        deck_list.extend(['SKB']*12)
+        r.shuffle(deck_list)
+        deck_iter = iter(deck_list)
+        return deck_iter
+
+    def absorb_full_build():
+        pass
+        
+
+
+
+
+
+
+
+
+
+
 
 # player that draws highest card goes first/dealer
 
