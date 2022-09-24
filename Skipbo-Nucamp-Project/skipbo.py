@@ -1,5 +1,25 @@
 import random as r
 
+class deck:
+    deck_iter = generate_deck_iter()
+    top_deck = next(deck_iter)
+    build = {"b1":[],"b2":[],"b3":[],"b4":[]}
+
+    def generate_deck_iter(self, bx = ''):
+        deck_list = []
+        if bx == '':
+            for i in range(1,12):
+                deck_list.extend([str(i)]*12)
+            deck_list.extend(['SKB']*12)
+        else:
+            for i in self.deck_iter:
+                deck_list.append(i)
+            for i in range(1,12):
+                deck_list.extend([str(i)])
+
+        r.shuffle(deck_list)
+        deck_iter = iter(deck_list)
+        return deck_iter
 
 # shuffle the deck (144 cards numbered 1-12)(twelve 1's, twelve 2's,..., twelve 12's)(18 skipbo cards)
 class player:
@@ -22,23 +42,7 @@ class player:
         # discard one card from hand to end your turn
         pass
 
-class draw_build:
-    deck_iter = generate_deck_iter()
-    top_draw = next(deck_iter)
-    build = {"b1":[],"b2":[],"b3":[],"b4":[]}
 
-    def generate_deck_iter(self):
-        deck_list = []
-        for i in range(1,12):
-            deck_list.extend([str(i)]*12)
-
-        deck_list.extend(['SKB']*12)
-        r.shuffle(deck_list)
-        deck_iter = iter(deck_list)
-        return deck_iter
-
-    def absorb_full_build():
-        pass
         
 
 
