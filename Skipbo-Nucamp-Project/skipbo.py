@@ -21,9 +21,12 @@ class deck:
         deck_iter = iter(deck_list)
         return deck_iter
 
+    def deal(self, card, player):
+
 # shuffle the deck (144 cards numbered 1-12)(twelve 1's, twelve 2's,..., twelve 12's)(18 skipbo cards)
 class player:
     hand = []
+    stock_pile = []
     discard = {"d1":[],"d2":[],"d3":[],"d4":[]}
     top_dcards = [self.discard["d1"][-1],self.discard["d2"][-1],self.discard["d3"][-1],self.discard["d4"][-1]]
 
