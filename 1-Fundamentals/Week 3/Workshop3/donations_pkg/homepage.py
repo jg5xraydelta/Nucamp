@@ -24,6 +24,6 @@ def donate(username, tot_don):
         
     tot_don += int(donation_amt)
     donation_string = username + ' donated $' + str(donation_amt)
-    print('Thank you for your donation', username + '!')
+    print('Thank you for your donation', username + '!\n')
     return donation_string, tot_don
 

@@ -7,7 +7,7 @@ def login(database, username, password):
     elif username in database.keys():
 
         if database[username] == password:
-            print('Welcome', username + '!')
+            print('Welcome', username + '!\n')
             return username
         else:
             print('Incorrect password for', username + '.')
@@ -25,7 +25,7 @@ def register(database, username, password):
         print('Username is taken.')
         return ''
     else:
-        print('Username', username, 'has been registered.')
+        print('Username', username, 'has been registered.\n')
         return username
 
 

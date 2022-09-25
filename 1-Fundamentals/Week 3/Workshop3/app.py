@@ -9,7 +9,7 @@ show_homepage()
 
 while True:
     if authorized_user == '':
-        print('You must be logged in to donate.')
+        print('You must be logged in to donate.\n')
     else:
         print('Logged in as:', authorized_user)
 
@@ -43,9 +43,9 @@ while True:
         else:
             for i in donations:
                 print(i)
-            print('Total donations: $', tot_don)
+            print('Total donations: $' + str(tot_don), '\n')
         show_homepage()
-                
+
     elif choice == '5':
         print('Goodbye!')
         quit()
