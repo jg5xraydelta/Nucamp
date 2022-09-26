@@ -21,7 +21,10 @@ class deck:
         deck_iter = iter(deck_list)
         return deck_iter
 
-    def deal(self, card, player):
+    def deal(self, player):
+        while len(player.hand()) < 5:
+            player.hand.append(next(deck_iter))
+        pass
 
 # shuffle the deck (144 cards numbered 1-12)(twelve 1's, twelve 2's,..., twelve 12's)(18 skipbo cards)
 class player:
