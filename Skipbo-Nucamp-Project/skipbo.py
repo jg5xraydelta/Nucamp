@@ -1,20 +1,21 @@
 import random as r
 
+
 class deck:
     deck_iter = generate_deck_iter()
     top_deck = next(deck_iter)
-    build = {"b1":[],"b2":[],"b3":[],"b4":[]}
+    build = {"b1": [], "b2": [], "b3": [], "b4": []}
 
-    def generate_deck_iter(self, bx = ''):
+    def generate_deck_iter(self, bx=''):
         deck_list = []
         if bx == '':
-            for i in range(1,12):
+            for i in range(1, 12):
                 deck_list.extend([str(i)]*12)
             deck_list.extend(['SKB']*12)
         else:
             for i in self.deck_iter:
                 deck_list.append(i)
-            for i in range(1,12):
+            for i in range(1, 12):
                 deck_list.extend([str(i)])
 
         r.shuffle(deck_list)
@@ -27,11 +28,14 @@ class deck:
         pass
 
 # shuffle the deck (144 cards numbered 1-12)(twelve 1's, twelve 2's,..., twelve 12's)(18 skipbo cards)
+
+
 class player:
     hand = []
     stock = []
-    discard = {"d1":[],"d2":[],"d3":[],"d4":[]}
-    top_dcards = [self.discard["d1"][-1],self.discard["d2"][-1],self.discard["d3"][-1],self.discard["d4"][-1]]
+    discard = {"d1": [], "d2": [], "d3": [], "d4": []}
+    top_dcards = [self.discard["d1"][-1], self.discard["d2"]
+                  [-1], self.discard["d3"][-1], self.discard["d4"][-1]]
 
     def __init__(self):
         self.name = input("Please choose your player name:")
@@ -54,18 +58,6 @@ class player:
         pass
 
 
-        
-
-
-
-
-
-
-
-
-
-
-
 # player that draws highest card goes first/dealer
 
 # dealer deals 30 cards to each player; this creates the stock_pile
@@ -77,7 +69,7 @@ class player:
 
 # player board: 4 discard piles, 1 stock pile
 # discard_pile ---> (unique to player) can be built in any order; last in first out
-# stock_pile (goal of game = no cards)(unique to player) ---> top card facing up; top card is the only card showing  
+# stock_pile (goal of game = no cards)(unique to player) ---> top card facing up; top card is the only card showing
 #                                      ---> can only play card showing; can't look at others
 # hand: player sees all card in hand; only 5 to start turn
 
@@ -90,4 +82,3 @@ class player:
 # cards left in hand are kept
 
 # turn 2: player draws cards to complete 5-card-hand and then tries to play
-
