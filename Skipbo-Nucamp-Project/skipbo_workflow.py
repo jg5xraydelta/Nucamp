@@ -25,6 +25,7 @@ while True:
     # Generate the deck
     dek = skb.generate_deck_iter()
 
+"""Mr. Computer algo/priority: play stock, hand, discard"""
     
 
 

@@ -3,7 +3,7 @@ import random as r
 
 class deck:
     deck_iter = generate_deck_iter()
-    top_deck = next(deck_iter)
+    top_deck = ''
     build = {"b1": [], "b2": [], "b3": [], "b4": []}
 
     def generate_deck_iter(self, bx=''):
@@ -25,7 +25,7 @@ class deck:
     def deal(self, player):
         while len(player.stock) < 5:
             player.hand.append(next(deck_iter))
-        pass
+
 
 # shuffle the deck (144 cards numbered 1-12)(twelve 1's, twelve 2's,..., twelve 12's)(18 skipbo cards)
 
