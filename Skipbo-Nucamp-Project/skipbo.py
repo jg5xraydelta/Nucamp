@@ -30,14 +30,13 @@ class deck:
 
 
 class player:
-    hand = []
-    stock = []
-    discard = {"d1": [], "d2": [], "d3": [], "d4": []}
-    top_dcards = [self.discard["d1"][-1], self.discard["d2"]
-                  [-1], self.discard["d3"][-1], self.discard["d4"][-1]]
+    discard = {"d1": [''], "d2": [''], "d3": [''], "d4": ['']}
+    top_dcards = [self.discard["d1"][-1], self.discard["d2"][-1], self.discard["d3"][-1], self.discard["d4"][-1]]
 
-    def __init__(self):
-        self.name = input("Please choose your player name:")
+    def __init__(self, name):
+        self.name = name
+        self.hand = []
+        self.stock = []
 
     def generate_stock(self, dk):
         while len(self.stock) < 30:
