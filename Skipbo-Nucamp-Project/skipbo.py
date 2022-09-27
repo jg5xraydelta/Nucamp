@@ -22,29 +22,34 @@ class deck:
         return deck_iter
 
     def deal(self, player):
-        while len(player.hand()) < 5:
+        while len(player.stock) < 5:
             player.hand.append(next(deck_iter))
         pass
 
 # shuffle the deck (144 cards numbered 1-12)(twelve 1's, twelve 2's,..., twelve 12's)(18 skipbo cards)
 class player:
     hand = []
-    stock_pile = []
+    stock = []
     discard = {"d1":[],"d2":[],"d3":[],"d4":[]}
     top_dcards = [self.discard["d1"][-1],self.discard["d2"][-1],self.discard["d3"][-1],self.discard["d4"][-1]]
 
     def __init__(self):
         self.name = input("Please choose your player name:")
 
-    def play_build(card):
+    def generate_stock(self):
+        while len(self.stock) < 30:
+            self.stock.append(next(deck_iter))
+
+    def play_build(self, card):
         # play a card from your hand, top_draw_card, or discard pile
+
         pass
 
-    def draw():
-        # draw from deck till hand length = 5
-        pass
+    def draw(self):
+        while len(self.hand) < 5:
+            self.hand.append(next(deck_iter))
 
-    def discard():
+    def discard(self):
         # discard one card from hand to end your turn
         pass
 
