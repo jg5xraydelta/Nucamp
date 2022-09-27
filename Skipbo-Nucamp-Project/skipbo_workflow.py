@@ -28,8 +28,14 @@ while True:
     else:
         print(player0, "goes first... womp, womp, wooomp")
 
-    # Generate the deck
-    dek = skb.generate_deck_iter()
+    # Generate the deck and each players stock pile
+    dk = skb.generate_deck_iter()
+    player0.generate_stock()
+    player1.generate_stock()
+    print("Deck has been shuffled.  Players have been dealt 30 cards each for their stock pile.")
+
+    # 
+
 
 """Mr. Computer algo/priority: play stock, hand, discard"""
     

@@ -2,25 +2,24 @@ import random as r
 
 
 class deck:
-    deck_iter = generate_deck_iter()
-    top_deck = ''
     build = {"b1": [], "b2": [], "b3": [], "b4": []}
 
-    def generate_deck_iter(self, bx=''):
+    def generate_deck_iter(self, dk = [], bx=''):
+        # dk is the current deck during game play; bx is a key for the build dictionary above
         deck_list = []
         if bx == '':
             for i in range(1, 12):
                 deck_list.extend([str(i)]*12)
             deck_list.extend(['SKB']*12)
         else:
-            for i in self.deck_iter:
+            for i in dk:
                 deck_list.append(i)
             for i in range(1, 12):
                 deck_list.extend([str(i)])
 
         r.shuffle(deck_list)
-        deck_iter = iter(deck_list)
-        return deck_iter
+        dk = iter(deck_list)
+        return dk
 
     def deal(self, player):
         while len(player.stock) < 5:
@@ -40,22 +39,23 @@ class player:
     def __init__(self):
         self.name = input("Please choose your player name:")
 
-    def generate_stock(self):
+    def generate_stock(self, dk):
         while len(self.stock) < 30:
-            self.stock.append(next(deck_iter))
+            self.stock.append(next(dk))
 
     def play_build(self, card):
         # play a card from your hand, top_draw_card, or discard pile
 
         pass
 
-    def draw(self):
+    def draw(self, dk):
         while len(self.hand) < 5:
-            self.hand.append(next(deck_iter))
+            self.hand.append(next(dk))
 
     def discard(self):
         # discard one card from hand to end your turn
         pass
+
 
 
 # player that draws highest card goes first/dealer
