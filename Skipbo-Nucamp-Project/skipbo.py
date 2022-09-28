@@ -1,5 +1,5 @@
 import random as r
-
+import game_dispay as gd
 
 class deck:
     build = {"b1": [], "b2": [], "b3": [], "b4": []}
@@ -21,14 +21,6 @@ class deck:
         dk = iter(deck_list)
         return dk
 
-    def deal(self, dk, player):
-        while len(player.stock) < 5:
-            player.hand.append(next(dk))
-
-
-# shuffle the deck (144 cards numbered 1-12)(twelve 1's, twelve 2's,..., twelve 12's)(18 skipbo cards)
-
-
 class player:
     discard = {"d1": [''], "d2": [''], "d3": [''], "d4": ['']}
 
@@ -39,23 +31,59 @@ class player:
         self.top_dcards = [self.discard["d1"][-1], self.discard["d2"][-1], self.discard["d3"][-1], self.discard["d4"][-1]]
 
     def generate_stock(self, dk):
+        """
+        self (object) is either player0 or player1 
+        dk (string) will be the current deck generator
+
+        """
         while len(self.stock) < 30:
             self.stock.append(next(dk))
 
-    def play_build(self, card):
-        # play a card from your hand, top_draw_card, or discard pile
-
-        pass
-
     def draw(self, dk):
+        """
+        self (object) is either player0 or player1
+        dk (iterator) will be the current deck generator
+
+        """
         while len(self.hand) < 5:
             self.hand.append(next(dk))
 
-    def discard(self):
-        # discard one card from hand to end your turn
-        pass
+    def play_build(self, card, pile, dk, dx, bx = ''):
+        """
+        self (object) is either player0 or player1
+        card (string) will be a number from 1-12 string type or skb
+        pile (string) will indicate whether the card comes from stock, hand, discard pile
+        dk (string) will be the current deck generator
+        dx (string) will be the key of the discard pile (there are 4 total)
+        bx (string) will be the key of the build pile that will have card added
+        """
+        while card not in [self.hand, self.top_dcards, self.stock[-1]]:
+            card = input("Card must come from your hand, discard piles or stock pile.")
+            if card == "cancel":
+                break
+        
+        dk.build[bx].append(card)
+        if pile == 's':
+            self.stock.pop(card)
+        elif pile == 'h':
+            self.hand.pop(card)
+        elif pile == 'd':
+            self.discard[dx].pop(card)
 
-
+        
+    def discard(self,card, dx):
+        """
+        self is either player0 or player1
+        card will be a number from 1-12 string type or skb
+        dx will be the key of the discard pile (there are 4 total)
+        """
+        while card not in self.hand:
+            card = input("Card must come from your hand.")
+            if card == "cancel":
+                break
+        
+        self.discard[dx].append(card)
+        self.hand.pop(card)
 
 # player that draws highest card goes first/dealer
 
