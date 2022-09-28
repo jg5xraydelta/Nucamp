@@ -21,9 +21,9 @@ class deck:
         dk = iter(deck_list)
         return dk
 
-    def deal(self, player):
+    def deal(self, dk, player):
         while len(player.stock) < 5:
-            player.hand.append(next(deck_iter))
+            player.hand.append(next(dk))
 
 
 # shuffle the deck (144 cards numbered 1-12)(twelve 1's, twelve 2's,..., twelve 12's)(18 skipbo cards)
@@ -31,12 +31,12 @@ class deck:
 
 class player:
     discard = {"d1": [''], "d2": [''], "d3": [''], "d4": ['']}
-    top_dcards = [self.discard["d1"][-1], self.discard["d2"][-1], self.discard["d3"][-1], self.discard["d4"][-1]]
 
     def __init__(self, name):
         self.name = name
         self.hand = []
         self.stock = []
+        self.top_dcards = [self.discard["d1"][-1], self.discard["d2"][-1], self.discard["d3"][-1], self.discard["d4"][-1]]
 
     def generate_stock(self, dk):
         while len(self.stock) < 30:
