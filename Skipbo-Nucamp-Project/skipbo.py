@@ -61,7 +61,7 @@ class player:
             card = input("Card must come from your hand, discard piles or stock pile.")
             if card == "cancel":
                 break
-        
+
         dk.build[bx].append(card)
         if pile == 's':
             self.stock.pop(card)
@@ -81,7 +81,7 @@ class player:
             card = input("Card must come from your hand.")
             if card == "cancel":
                 break
-        
+
         self.discard[dx].append(card)
         self.hand.pop(card)
 
