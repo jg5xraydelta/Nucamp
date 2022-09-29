@@ -38,9 +38,20 @@ while True:
 
         # mrComputer's turn
         while player_control == 0:
+
+            # mrComputer needs refill hand
+            player0.draw(dk)
             
-            # mrComputer's algo:
-            while card in [player0.hand, player0.stock[-1]]
+            # a list of possible plays needs to be generated with a function
+            for card in dk.cards:
+
+                # mrComputer's algo:
+                while card in [player0.hand, player0.stock[-1], player0.top_dcards]
+                    pile = player0.card_pile(card)
+                    
+                    player0.play_build(card, pile, dk,bx=build_add)
+
+                
 
         # player1's turn
         while player_control == 1:

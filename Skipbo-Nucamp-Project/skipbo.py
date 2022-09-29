@@ -1,10 +1,12 @@
 import random as r
 import game_dispay as gd
 
+
 class deck:
     build = {"b1": [], "b2": [], "b3": [], "b4": []}
+    cards = [int(i[-1]) + 1 for i in build.values()]
 
-    def generate_deck_iter(self, dk = [], bx=''):
+    def generate_deck_iter(self, dk=[], bx=''):
         # dk is the current deck during game play; bx is a key for the build dictionary above
         deck_list = []
         if bx == '':
@@ -21,6 +23,7 @@ class deck:
         dk = iter(deck_list)
         return dk
 
+
 class player:
     discard = {"d1": [''], "d2": [''], "d3": [''], "d4": ['']}
 
@@ -28,7 +31,8 @@ class player:
         self.name = name
         self.hand = []
         self.stock = []
-        self.top_dcards = [self.discard["d1"][-1], self.discard["d2"][-1], self.discard["d3"][-1], self.discard["d4"][-1]]
+        self.top_dcards = [self.discard["d1"][-1], self.discard["d2"]
+                           [-1], self.discard["d3"][-1], self.discard["d4"][-1]]
 
     def generate_stock(self, dk):
         """
@@ -39,6 +43,16 @@ class player:
         while len(self.stock) < 30:
             self.stock.append(next(dk))
 
+    def card_pile(self, card):
+        if card in self.stock[-1]:
+            return 's'
+        if card in self.hand:
+            return 'h'
+        if card in self.top_dcards:
+            return
+
+
+
     def draw(self, dk):
         """
         self (object) is either player0 or player1
@@ -48,7 +62,7 @@ class player:
         while len(self.hand) < 5:
             self.hand.append(next(dk))
 
-    def play_build(self, card, pile, dk, dx, bx = ''):
+    def play_build(self, card, pile, dk, dx=''):
         """
         self (object) is either player0 or player1
         card (string) will be a number from 1-12 string type or skb
@@ -58,10 +72,12 @@ class player:
         bx (string) will be the key of the build pile that will have card added
         """
         while card not in [self.hand, self.top_dcards, self.stock[-1]]:
-            card = input("Card must come from your hand, discard piles or stock pile.")
+            card = input(
+                "Card must come from your hand, discard piles or stock pile.")
             if card == "cancel":
                 break
 
+        bx = "b" + str(cards.loc(card)+1)
         dk.build[bx].append(card)
         if pile == 's':
             self.stock.pop(card)
@@ -70,8 +86,7 @@ class player:
         elif pile == 'd':
             self.discard[dx].pop(card)
 
-        
-    def discard(self,card, dx):
+    def discard(self, card, dx):
         """
         self is either player0 or player1
         card will be a number from 1-12 string type or skb
