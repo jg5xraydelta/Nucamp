@@ -33,7 +33,19 @@ while True:
     player1.generate_stock()
     print("Deck has been shuffled.  Players have been dealt 30 cards each for their stock pile.")
 
-    
+    # player wins when all stock cards have been played
+    while len(player0.stock) > 0 and len(player1.stock) > 0:
+
+        # mrComputer's turn
+        while player_control == 0:
+            
+            # mrComputer's algo:
+            while card in [player0.hand, player0.stock[-1]]
+
+        # player1's turn
+        while player_control == 1:
+
+
 
 """Mr. Computer algo/priority: play stock, hand, discard"""
     
