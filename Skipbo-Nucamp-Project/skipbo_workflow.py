@@ -36,7 +36,7 @@ while True:
     # player wins when all stock cards have been played
     while len(player0.stock) > 0 and len(player1.stock) > 0:
 
-        # mrComputer's turn
+        # mrComputer's turn ---------------------------------------------------
         while player_control == 0:
 
             # mrComputer needs refill hand
@@ -46,15 +46,53 @@ while True:
             for card in dk.cards:
 
                 # mrComputer's algo:
-                while card in [player0.hand, player0.stock[-1], player0.top_dcards]
-                    pile = player0.card_pile(card)
-                    
-                    player0.play_build(card, pile, dk,bx=build_add)
+                while card in [player0.stock[-1], player0.hand, player0.top_dcards]
+                    player0.play_build(card, dk)
+                    break
 
-                
+                while card not in [player0.stock[-1], player0.hand, player0.top_dcards]
+                    player0.discard()
+                    player_control = 1
+                    break
 
-        # player1's turn
+        # player1's turn -----------------------------------------------------
         while player_control == 1:
+            player1.draw(dk)
+            print(game.display(dk, player0, player1))
+            
+            # can you like to play build?
+            card = ''            
+            while card == '':
+                pile = input("Which pile would you like to play? Enter s, h or d:").lower()
+                if pile = 'discard':
+                    break
+
+                card = input("Which card would you like to play? Enter 1-12 or skb:").lower()
+                if card = 'discard':
+                    break
+                
+                player1.play_build(card, dk, pile)
+            
+
+            
+            card = input("Which card would you like to discard? Enter 1-12 or skb:").lower()
+            dx = "d" + input("Which discard pile do you want to put it in? Enter 1-4:")
+            player1.discard(card, dx)
+            player_control = 0
+
+    if len(player0.stock) == 0:
+        print("mrComputer wins!")
+    else:
+        print(player1.name, "wins!  Congratulations!!")
+
+    play_again = input("Would you like to play again? Enter n for no:")
+    if play_again == 'n':
+        break
+
+    
+
+
+            
 
 
 

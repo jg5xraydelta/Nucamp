@@ -25,14 +25,14 @@ class deck:
 
 
 class player:
-    discard = {"d1": [''], "d2": [''], "d3": [''], "d4": ['']}
+    discard_pile = {"d1": [''], "d2": [''], "d3": [''], "d4": ['']}
 
     def __init__(self, name):
         self.name = name
         self.hand = []
         self.stock = []
-        self.top_dcards = [self.discard["d1"][-1], self.discard["d2"]
-                           [-1], self.discard["d3"][-1], self.discard["d4"][-1]]
+        self.discards = [self.discard_pile["d1"][-1], self.discard_pile["d2"]
+                           [-1], self.discard_pile["d3"][-1], self.discard_pile["d4"][-1]]
 
     def generate_stock(self, dk):
         """
@@ -49,7 +49,7 @@ class player:
         if card in self.hand:
             return 'h'
         if card in self.top_dcards:
-            return
+            return  'd'
 
 
 
@@ -62,7 +62,7 @@ class player:
         while len(self.hand) < 5:
             self.hand.append(next(dk))
 
-    def play_build(self, card, pile, dk, dx=''):
+    def play_build(self, card, dk):
         """
         self (object) is either player0 or player1
         card (string) will be a number from 1-12 string type or skb
@@ -76,9 +76,17 @@ class player:
                 "Card must come from your hand, discard piles or stock pile.")
             if card == "cancel":
                 break
+                
+        # find locations of cards to be played and build pile destination
+        if self.name == 'mrComputer': 
+            pile = self.card_pile(card)
 
-        bx = "b" + str(cards.loc(card)+1)
+        bx = "b" + str(dk.cards.loc(card)+1)
+        if pile == 'd':
+            dx = "d" + str(self.discards.loc(card) + 1)
+
         dk.build[bx].append(card)
+
         if pile == 's':
             self.stock.pop(card)
         elif pile == 'h':
@@ -97,7 +105,7 @@ class player:
             if card == "cancel":
                 break
 
-        self.discard[dx].append(card)
+        self.discard_pile[dx].append(card)
         self.hand.pop(card)
 
 # player that draws highest card goes first/dealer
