@@ -46,21 +46,21 @@ while True:
             for card in dk.cards:
 
                 # mrComputer's algo:
-                while card in [player0.stock[-1], player0.hand, player0.top_dcards]
+                if card in [player0.stock[-1], player0.hand, player0.top_dcards]
                     player0.play_build(card, dk)
-                    break
 
-                while card not in [player0.stock[-1], player0.hand, player0.top_dcards]
-                    player0.discard()
-                    player_control = 1
-                    break
+            if len(player1.stock) == 0:
+                break                
+            player0.discard()
+            player_control = 1
+            continue
 
         # player1's turn -----------------------------------------------------
         while player_control == 1:
             player1.draw(dk)
             print(game.display(dk, player0, player1))
             
-            # can you like to play build?
+            # can you play build?
             card = ''            
             while card == '':
                 pile = input("Which pile would you like to play? Enter s, h or d:").lower()
@@ -73,12 +73,14 @@ while True:
                 
                 player1.play_build(card, dk, pile)
             
-
-            
+            if len(player1.stock) == 0:
+                break
             card = input("Which card would you like to discard? Enter 1-12 or skb:").lower()
             dx = "d" + input("Which discard pile do you want to put it in? Enter 1-4:")
             player1.discard(card, dx)
             player_control = 0
+            break
+        #----------------------------------------------------------------------
 
     if len(player0.stock) == 0:
         print("mrComputer wins!")
@@ -89,7 +91,7 @@ while True:
     if play_again == 'n':
         break
 
-    
+
 
 
             
