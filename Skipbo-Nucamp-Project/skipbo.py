@@ -1,10 +1,16 @@
-import random as r
-import game_dispay as gd
-
 
 class deck:
     build = {"b1": [], "b2": [], "b3": [], "b4": []}
-    cards = [int(i[-1]) + 1 for i in build.values()]
+
+    def playable_cards(self):
+        cards = []
+        for bcards in list(self.build.values()):
+            if bcards == []:
+                continue
+            else:
+                cards.append(bcards[-1])
+
+        return cards
 
     def generate_deck_iter(self, dk=[], bx=''):
         # dk is the current deck during game play; bx is a key for the build dictionary above
@@ -25,12 +31,12 @@ class deck:
 
 
 class player:
-    discard_pile = {"d1": [''], "d2": [''], "d3": [''], "d4": ['']}
-
+    
     def __init__(self, name):
         self.name = name
         self.hand = []
         self.stock = []
+        self.discard_pile = {"d1": [''], "d2": [''], "d3": [''], "d4": ['']}
         self.discards = [self.discard_pile["d1"][-1], self.discard_pile["d2"]
                            [-1], self.discard_pile["d3"][-1], self.discard_pile["d4"][-1]]
 
@@ -43,6 +49,12 @@ class player:
         while len(self.stock) < 30:
             self.stock.append(next(dk))
 
+    def check_cards(self, list1, list2):
+        for card in list1:
+            if card in list2:
+                return card
+        return False
+
     def card_pile(self, card):
         if card in self.stock[-1]:
             return 's'
@@ -50,8 +62,6 @@ class player:
             return 'h'
         if card in self.top_dcards:
             return  'd'
-
-
 
     def draw(self, dk):
         """
@@ -71,6 +81,7 @@ class player:
         dx (string) will be the key of the discard pile (there are 4 total)
         bx (string) will be the key of the build pile that will have card added
         """
+        # Double check that player has the card
         while card not in [self.hand, self.top_dcards, self.stock[-1]]:
             card = input(
                 "Card must come from your hand, discard piles or stock pile.")
@@ -79,12 +90,10 @@ class player:
                 
         # find locations of cards to be played and build pile destination
         if self.name == 'mrComputer': 
+            # card located by hiarchy stock, hand, discard
             pile = self.card_pile(card)
 
         bx = "b" + str(dk.cards.loc(card)+1)
-        if pile == 'd':
-            dx = "d" + str(self.discards.loc(card) + 1)
-
         dk.build[bx].append(card)
 
         if pile == 's':
@@ -92,6 +101,7 @@ class player:
         elif pile == 'h':
             self.hand.pop(card)
         elif pile == 'd':
+            dx = "d" + str(self.discards.loc(card) + 1)
             self.discard[dx].pop(card)
 
     def discard(self, card, dx):

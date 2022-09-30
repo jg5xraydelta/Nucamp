@@ -1,13 +1,13 @@
-import skipbo as skb
-import game_display as game
+import skipbo
+import game_display
 
 while True:
     # Prompt player name and ask if they would like to play.
     player1 = input("What is your name?")
-    player1 = skb.player(player1)
+    player1 = skipbo.player(player1)
 
     # initiate computer player
-    player0 = skb.player("mrComputer")
+    player0 = skipbo.player("mrComputer")
 
     print("Would you like to play a game", player1.name + "?")
     print("Don worry ", player1.name, " the game is called skipbo!")
@@ -28,7 +28,8 @@ while True:
         print(player0.name, "goes first... womp, womp, wooomp")
 
     # Generate the deck and each players stock pile
-    dk = skb.generate_deck_iter()
+    deck = skipbo.deck
+    dk = deck.generate_deck_iter()
     player0.generate_stock()
     player1.generate_stock()
     print("Deck has been shuffled.  Players have been dealt 30 cards each for their stock pile.")
@@ -43,11 +44,9 @@ while True:
             player0.draw(dk)
             
             # a list of possible plays needs to be generated with a function
-            for card in dk.cards:
-
-                # mrComputer's algo:
-                if card in [player0.stock[-1], player0.hand, player0.top_dcards]
-                    player0.play_build(card, dk)
+            
+            while check_cards(deck.playable_cards(), [player0.stock[-1]] + player0.hand + player0.discards):
+                player0.play_build(card, deck)
 
             if len(player1.stock) == 0:
                 break                
@@ -58,17 +57,17 @@ while True:
         # player1's turn -----------------------------------------------------
         while player_control == 1:
             player1.draw(dk)
-            print(game.display(dk, player0, player1))
+            print(game_display.display(dk, player0, player1))
             
             # can you play build?
             card = ''            
             while card == '':
                 pile = input("Which pile would you like to play? Enter s, h or d:").lower()
-                if pile = 'discard':
+                if pile == 'discard':
                     break
 
                 card = input("Which card would you like to play? Enter 1-12 or skb:").lower()
-                if card = 'discard':
+                if card == 'discard':
                     break
                 
                 player1.play_build(card, dk, pile)
@@ -89,17 +88,11 @@ while True:
 
     play_again = input("Would you like to play again? Enter n for no:")
     if play_again == 'n':
+        print("Goodbye", player1, ", thanks for playing!")
         break
 
 
 
-
-            
-
-
-
-"""Mr. Computer algo/priority: play stock, hand, discard"""
-    
 
 
 
