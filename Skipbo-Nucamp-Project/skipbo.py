@@ -1,3 +1,4 @@
+import random as r
 
 class deck:
     build = {"b1": [], "b2": [], "b3": [], "b4": []}
@@ -72,7 +73,7 @@ class player:
         while len(self.hand) < 5:
             self.hand.append(next(dk))
 
-    def play_build(self, card, dk):
+    def play_build(self, card, deck):
         """
         self (object) is either player0 or player1
         card (string) will be a number from 1-12 string type or skb
@@ -82,7 +83,7 @@ class player:
         bx (string) will be the key of the build pile that will have card added
         """
         # Double check that player has the card
-        while card not in [self.hand, self.top_dcards, self.stock[-1]]:
+        while card not in [self.hand, self.discards, self.stock[-1]]:
             card = input(
                 "Card must come from your hand, discard piles or stock pile.")
             if card == "cancel":
@@ -94,7 +95,7 @@ class player:
             pile = self.card_pile(card)
 
         bx = "b" + str(dk.cards.loc(card)+1)
-        dk.build[bx].append(card)
+        deck.build[bx].append(card)
 
         if pile == 's':
             self.stock.pop(card)
