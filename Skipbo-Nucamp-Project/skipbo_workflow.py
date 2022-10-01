@@ -54,28 +54,29 @@ while True:
 
             if len(player1.stock) == 0:
                 break  
-            dx = "d" + str(r.randint(1,4))              
-            player0.discard(max(player0.hand), dx)
+            dx = "d" + str(r.randint(1,4))
+            card = player0.hand[r.randint(0,len(player0.hand))]
+            player0.discard(card, dx)
             player_control = 1
             continue
 
         # player1's turn -----------------------------------------------------
         while player_control == 1:
             player1.draw(dk)
-            print(game_display.display(dk, player0, player1))
+            print(game_display.display(deck, player0, player1))
             
             # can you play build?
             card = ''            
             while card == '':
                 pile = input("Which pile would you like to play? Enter s, h or d:").lower()
-                if pile == 'discard':
+                if pile in ['discard','']:
                     break
 
                 card = input("Which card would you like to play? Enter 1-12 or skb:").lower()
-                if card == 'discard':
+                if card == ['discard','']:
                     break
                 
-                player1.play_build(card, dk, pile)
+                player1.play_build(card, deck, pile)
             
             if len(player1.stock) == 0:
                 break

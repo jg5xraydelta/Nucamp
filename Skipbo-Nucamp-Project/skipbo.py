@@ -4,7 +4,7 @@ class deck:
     build = {"b1": [], "b2": [], "b3": [], "b4": []}
 
     def playable_cards(self):
-        cards = []
+        cards = ['skb']
         for bcards in list(self.build.values()):
             if bcards == []:
                 continue
@@ -73,7 +73,7 @@ class player:
         while len(self.hand) < 5:
             self.hand.append(next(dk))
 
-    def play_build(self, card, deck):
+    def play_build(self, card, deck, pile):
         """
         self (object) is either player0 or player1
         card (string) will be a number from 1-12 string type or skb
@@ -94,7 +94,8 @@ class player:
             # card located by hiarchy stock, hand, discard
             pile = self.card_pile(card)
 
-        bx = "b" + str(dk.cards.loc(card)+1)
+        cards = deck.playable_cards()
+        bx = "b" + str(deck.cards.loc(card)+1)
         deck.build[bx].append(card)
 
         if pile == 's':
@@ -117,7 +118,7 @@ class player:
                 break
 
         self.discard_pile[dx].append(card)
-        self.hand.pop(card)
+        self.hand.remove(card)
 
 # player that draws highest card goes first/dealer
 
