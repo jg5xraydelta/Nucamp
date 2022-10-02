@@ -47,13 +47,16 @@ while True:
             # mrComputer needs refill hand
             player0.draw(dk)
             game_display.display(deck, player0, player1)
+
             # a list of possible plays needs to be generated with a function
-            
             while player0.check_cards(deck.playable_cards(), [player0.stock[-1]] + player0.hand + player0.top_discards()):
                 card = player0.check_cards(deck.playable_cards(), [player0.stock[-1]] + player0.hand + player0.top_discards())
                 pile = player0.card_pile(card)
+                game_display.display(deck, player0, player1)
                 print("play",card, 'from', pile)
                 player0.play_build(card, deck, pile)
+                if len(player1.hand) == 0:
+                    player1.draw(dk)
 
             if len(player1.stock) == 0:
                 break  
@@ -70,8 +73,9 @@ while True:
             print(game_display.display(deck, player0, player1))
             
             # can you play build?
-            card = ''            
-            while card == '':
+            while True:
+                print(game_display.display(deck, player0, player1))
+                print("Enter 'discard' if you would like to discard.")
                 pile = input("Which pile would you like to play? Enter s, h or d:").lower()
                 if pile in ['discard','']:
                     break
