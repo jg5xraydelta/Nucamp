@@ -19,7 +19,7 @@ while True:
         break
 
     # Choose which player goes first.
-    num_string = "Let's see who goes first" + player1.name + ". Pick a number from 1 to 10...  "
+    num_string = "Let's see who goes first " + player1.name + ". Pick a number from 1 to 10...  "
     num = input(num_string)
     player_control = 0
 
@@ -46,19 +46,23 @@ while True:
 
             # mrComputer needs refill hand
             player0.draw(dk)
-            
+            game_display.display(deck, player0, player1)
             # a list of possible plays needs to be generated with a function
             
-            while player0.check_cards(deck.playable_cards(), [player0.stock[-1]] + player0.hand + player0.discards):
-                player0.play_build(card, deck)
+            while player0.check_cards(deck.playable_cards(), [player0.stock[-1]] + player0.hand + player0.top_discards()):
+                card = player0.check_cards(deck.playable_cards(), [player0.stock[-1]] + player0.hand + player0.top_discards())
+                pile = player0.card_pile(card)
+                print("play",card, 'from', pile)
+                player0.play_build(card, deck, pile)
 
             if len(player1.stock) == 0:
                 break  
             dx = "d" + str(r.randint(1,4))
-            card = player0.hand[r.randint(0,len(player0.hand))]
+            card = player0.hand[r.randint(0,len(player0.hand)-1)]
+            print("discarding")
             player0.discard(card, dx)
             player_control = 1
-            continue
+        
 
         # player1's turn -----------------------------------------------------
         while player_control == 1:
@@ -84,7 +88,7 @@ while True:
             dx = "d" + input("Which discard pile do you want to put it in? Enter 1-4:")
             player1.discard(card, dx)
             player_control = 0
-            break
+        
         #----------------------------------------------------------------------
 
     if len(player0.stock) == 0:

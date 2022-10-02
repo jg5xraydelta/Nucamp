@@ -1,15 +1,18 @@
 import random as r
 
 class deck:
-    build = {"b1": [], "b2": [], "b3": [], "b4": []}
+    def __init__(self) -> None:
+        self.build = {"b1": ['0'], "b2": ['0'], "b3": ['0'], "b4": ['0']}
 
     def playable_cards(self):
         cards = ['skb']
         for bcards in list(self.build.values()):
-            if bcards == []:
-                continue
-            else:
-                cards.append(bcards[-1])
+            cnt = -1
+            while bcards[cnt] == 'skb':
+                cnt -=1
+            
+            p_card = str(int(bcards[cnt])-cnt)
+            cards.append(p_card)
 
         return cards
 
@@ -19,13 +22,14 @@ class deck:
         if bx == '':
             for i in range(1, 12):
                 deck_list.extend([str(i)]*12)
-            deck_list.extend(['SKB']*12)
+            deck_list.extend(['skb']*12)
         else:
             for i in dk:
                 deck_list.append(i)
             for i in range(1, 12):
                 deck_list.extend([str(i)])
-
+            deck.build[bx] = ['0']
+        
         r.shuffle(deck_list)
         dk = iter(deck_list)
         return dk
@@ -37,9 +41,17 @@ class player:
         self.name = name
         self.hand = []
         self.stock = []
-        self.discard_pile = {"d1": [''], "d2": [''], "d3": [''], "d4": ['']}
-        self.discards = [self.discard_pile["d1"][-1], self.discard_pile["d2"]
-                           [-1], self.discard_pile["d3"][-1], self.discard_pile["d4"][-1]]
+        self.discard_pile = {"d1": ['1'], "d2": ['2'], "d3": ['3'], "d4": ['4']}
+
+    def top_discards(self):
+        discards = []
+        for dx in ['d1','d2','d3','d4']:
+            if self.discard_pile[dx] == []:
+                discards.append('empty')
+            else:
+                discards.append(self.discard_pile[dx][-1])
+        return discards
+        
 
     def generate_stock(self, dk):
         """
@@ -53,15 +65,15 @@ class player:
     def check_cards(self, list1, list2):
         for card in list1:
             if card in list2:
-                return card
+                return str(card)
         return False
 
     def card_pile(self, card):
-        if card in self.stock[-1]:
+        if card == self.stock[-1]:
             return 's'
         if card in self.hand:
             return 'h'
-        if card in self.top_dcards:
+        if card in self.top_discards():
             return  'd'
 
     def draw(self, dk):
@@ -83,7 +95,7 @@ class player:
         bx (string) will be the key of the build pile that will have card added
         """
         # Double check that player has the card
-        while card not in [self.hand, self.discards, self.stock[-1]]:
+        while card not in [*self.hand, *self.top_discards(), self.stock[-1]]:
             card = input(
                 "Card must come from your hand, discard piles or stock pile.")
             if card == "cancel":
@@ -94,17 +106,21 @@ class player:
             # card located by hiarchy stock, hand, discard
             pile = self.card_pile(card)
 
+
         cards = deck.playable_cards()
-        bx = "b" + str(deck.cards.loc(card)+1)
+        if card == 'skb':
+            bx = "b" + str(r.randint(1,4))
+        else:    
+            bx = "b" + str(cards.index(card))
         deck.build[bx].append(card)
 
         if pile == 's':
-            self.stock.pop(card)
+            self.stock.remove(card)
         elif pile == 'h':
-            self.hand.pop(card)
+            self.hand.remove(card)
         elif pile == 'd':
-            dx = "d" + str(self.discards.loc(card) + 1)
-            self.discard[dx].pop(card)
+            dx = "d" + str(self.top_discards().index(card) + 1)
+            self.discard_pile[dx].remove(card)
 
     def discard(self, card, dx):
         """
