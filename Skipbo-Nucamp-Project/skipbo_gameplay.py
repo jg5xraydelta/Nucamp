@@ -1,14 +1,14 @@
-import skipbo
+import skipbo_mods
 import game_display
 import random as r
 
 while True:
     # Prompt player name and ask if they would like to play.
     player1 = input("What is your name?  ")
-    player1 = skipbo.player(player1)
+    player1 = skipbo_mods.player(player1)
 
     # initiate computer player
-    player0 = skipbo.player("mrComputer")
+    player0 = skipbo_mods.player("mrComputer")
 
     print("Would you like to play a game", player1.name + "?")
     print("Don worry ", player1.name, " the game is called skipbo!")
@@ -30,7 +30,7 @@ while True:
         print(player0.name, "goes first... womp, womp, wooomp")
 
     # Generate the deck and each players stock pile
-    deck = skipbo.deck()
+    deck = skipbo_mods.deck()
     dk = deck.generate_deck_iter()
 
     player0.generate_stock(dk)
@@ -53,7 +53,7 @@ while True:
                 card = player0.check_cards(deck.playable_cards(), [player0.stock[-1]] + player0.hand + player0.top_discards())
                 pile = player0.card_pile(card)
                 game_display.display(deck, player0, player1)
-                print("play",card, 'from', pile)
+                print(player0.name,": play",card, 'from', pile)
                 player0.play_build(card, deck, pile)
                 if len(player1.hand) == 0:
                     player1.draw(dk)
@@ -85,6 +85,7 @@ while True:
                     break
                 
                 player1.play_build(card, deck, pile)
+                print(player1.name,": play",card, 'from', pile)
             
             if len(player1.stock) == 0:
                 break
@@ -104,19 +105,3 @@ while True:
     if play_again == 'n':
         print("Goodbye", player1, ", thanks for playing!")
         break
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

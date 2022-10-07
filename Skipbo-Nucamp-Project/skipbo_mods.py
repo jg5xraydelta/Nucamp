@@ -1,4 +1,6 @@
 import random as r
+from this import d
+
 
 class deck:
     def __init__(self) -> None:
@@ -9,8 +11,8 @@ class deck:
         for bcards in list(self.build.values()):
             cnt = -1
             while bcards[cnt] == 'skb':
-                cnt -=1
-            
+                cnt -= 1
+
             p_card = str(int(bcards[cnt])-cnt)
             cards.append(p_card)
 
@@ -29,29 +31,29 @@ class deck:
             for i in range(1, 12):
                 deck_list.extend([str(i)])
             deck.build[bx] = ['0']
-        
+
         r.shuffle(deck_list)
         dk = iter(deck_list)
         return dk
 
 
 class player:
-    
+
     def __init__(self, name):
         self.name = name
         self.hand = []
         self.stock = []
-        self.discard_pile = {"d1": ['1'], "d2": ['2'], "d3": ['3'], "d4": ['4']}
+        self.discard_pile = {"d1": ['1'], "d2": [
+            '2'], "d3": ['3'], "d4": ['4']}
 
     def top_discards(self):
         discards = []
-        for dx in ['d1','d2','d3','d4']:
+        for dx in ['d1', 'd2', 'd3', 'd4']:
             if self.discard_pile[dx] == []:
                 discards.append('empty')
             else:
                 discards.append(self.discard_pile[dx][-1])
         return discards
-        
 
     def generate_stock(self, dk):
         """
@@ -74,7 +76,7 @@ class player:
         if card in self.hand:
             return 'h'
         if card in self.top_discards():
-            return  'd'
+            return 'd'
 
     def draw(self, dk):
         """
@@ -94,23 +96,23 @@ class player:
         dx (string) will be the key of the discard pile (there are 4 total)
         bx (string) will be the key of the build pile that will have card added
         """
+        cards = deck.playable_cards()
+
         # Double check that player has the card
-        while card not in [*self.hand, *self.top_discards(), self.stock[-1]]:
+        while card not in [*self.hand, *self.top_discards(), self.stock[-1], cards]:
             card = input(
-                "Card must come from your hand, discard piles or stock pile.")
+                "Card must come from your hand, discard piles or stock pile and be playable.")
             if card == "cancel":
                 break
-                
+
         # find locations of cards to be played and build pile destination
-        if self.name == 'mrComputer': 
+        if self.name == 'mrComputer':
             # card located by hiarchy stock, hand, discard
             pile = self.card_pile(card)
 
-
-        cards = deck.playable_cards()
         if card == 'skb':
-            bx = "b" + str(r.randint(1,4))
-        else:    
+            bx = "b" + str(r.randint(1, 4))
+        else:
             bx = "b" + str(cards.index(card))
         deck.build[bx].append(card)
 
