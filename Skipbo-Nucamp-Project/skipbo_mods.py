@@ -18,10 +18,16 @@ class deck:
 
         return cards
 
-    def generate_deck_iter(self, dk=[], bx=''):
+    def check_completed_build(self):
+        bx = False
+        if '12' in list(self.build.values()):
+            bx = list(self.build.keys())[list(self.build.values()).index('12')]
+            return bx
+
+    def generate_deck_iter(self, dk=[], bx='begin'):
         # dk is the current deck during game play; bx is a key for the build dictionary above
         deck_list = []
-        if bx == '':
+        if bx == 'begin':
             for i in range(1, 12):
                 deck_list.extend([str(i)]*12)
             deck_list.extend(['skb']*12)
@@ -87,7 +93,7 @@ class player:
         while len(self.hand) < 5:
             self.hand.append(next(dk))
 
-    def play_build(self, card, deck, pile):
+    def play_build(self, deck, dk, card, pile):
         """
         self (object) is either player0 or player1
         card (string) will be a number from 1-12 string type or skb
@@ -98,24 +104,29 @@ class player:
         """
         cards = deck.playable_cards()
 
-        # Double check that player has the card
-        while card not in [*self.hand, *self.top_discards(), self.stock[-1], cards]:
-            card = input(
-                "Card must come from your hand, discard piles or stock pile and be playable.")
-            if card == "cancel":
-                break
-
         # find locations of cards to be played and build pile destination
         if self.name == 'mrComputer':
-            # card located by hiarchy stock, hand, discard
             pile = self.card_pile(card)
 
         if card == 'skb':
             bx = "b" + str(r.randint(1, 4))
         else:
             bx = "b" + str(cards.index(card))
-        deck.build[bx].append(card)
 
+        
+        # add card to build pile
+        if card == 'skb':
+            card_num = deck.build[bx][-1]
+            deck.build[bx].append(card_num)
+        else:
+            deck.build[bx].append(card)
+
+        # check for a build pile that ends in 12
+        while deck.check_completed_build():
+            bx = deck.check_completed_build()
+            generate_deck_iter(self, dk, bx)
+
+        # remove card from stock, hand, discards
         if pile == 's':
             self.stock.remove(card)
         elif pile == 'h':
@@ -123,6 +134,7 @@ class player:
         elif pile == 'd':
             dx = "d" + str(self.top_discards().index(card) + 1)
             self.discard_pile[dx].remove(card)
+
 
     def discard(self, card, dx):
         """

@@ -1,5 +1,5 @@
+from game_play import mrComputer, player1_prompt
 import skipbo_mods
-import game_display
 import random as r
 
 while True:
@@ -39,30 +39,24 @@ while True:
 
     # player wins when all stock cards have been played
     while len(player0.stock) > 0 and len(player1.stock) > 0:
-        game_display.display(deck, player0, player1)
 
         # mrComputer's turn ---------------------------------------------------
         while player_control == 0:
 
             # mrComputer needs refill hand
             player0.draw(dk)
-            game_display.display(deck, player0, player1)
 
-            # a list of possible plays needs to be generated with a function
-            while player0.check_cards(deck.playable_cards(), [player0.stock[-1]] + player0.hand + player0.top_discards()):
-                card = player0.check_cards(deck.playable_cards(), [player0.stock[-1]] + player0.hand + player0.top_discards())
-                pile = player0.card_pile(card)
-                game_display.display(deck, player0, player1)
-                print(player0.name,": play",card, 'from', pile)
-                player0.play_build(card, deck, pile)
-                if len(player1.hand) == 0:
-                    player1.draw(dk)
+            # mrComputer checks for a play
+            mrComputer(deck, dk, player0, player1)
 
-            if len(player1.stock) == 0:
+            # check if stock pile is empty and mrComputer wins
+            if len(player0.stock) == 0:
                 break  
+
+            # mrComputer discards
             dx = "d" + str(r.randint(1,4))
             card = player0.hand[r.randint(0,len(player0.hand)-1)]
-            print("discarding")
+            print("mrComputer is discarding...")
             player0.discard(card, dx)
             player_control = 1
         
@@ -70,37 +64,30 @@ while True:
         # player1's turn -----------------------------------------------------
         while player_control == 1:
             player1.draw(dk)
-            print(game_display.display(deck, player0, player1))
             
-            # can you play build?
-            while True:
-                print(game_display.display(deck, player0, player1))
-                print("Enter 'discard' if you would like to discard.")
-                pile = input("Which pile would you like to play? Enter s, h or d:").lower()
-                if pile in ['discard','']:
-                    break
-
-                card = input("Which card would you like to play? Enter 1-12 or skb:").lower()
-                if card == ['discard','']:
-                    break
-                
-                player1.play_build(card, deck, pile)
-                print(player1.name,": play",card, 'from', pile)
-            
+            # player1 checks for a play
+            player1_prompt(deck, dk, player0, player1)
+                        
+            # check if stock pile is empty and mrComputer wins
             if len(player1.stock) == 0:
                 break
+
+            # player1 discards
             card = input("Which card would you like to discard? Enter 1-12 or skb:").lower()
             dx = "d" + input("Which discard pile do you want to put it in? Enter 1-4:")
+            print(player1.name, "is discarding...")
             player1.discard(card, dx)
             player_control = 0
         
         #----------------------------------------------------------------------
 
+    # decide winner
     if len(player0.stock) == 0:
         print("mrComputer wins!")
     else:
         print(player1.name, "wins!  Congratulations!!")
 
+    # prompts to play again
     play_again = input("Would you like to play again? Enter n for no:")
     if play_again == 'n':
         print("Goodbye", player1, ", thanks for playing!")

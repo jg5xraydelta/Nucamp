@@ -34,6 +34,7 @@ while True:
         print(game_display.display(deck, player0, player1))
         print("Enter 'discard' if you would like to discard.")
 
+        
         pile = input("Which pile would you like to play? Enter s, h or d:").lower()
         if pile in ['discard','']:
             break
@@ -60,7 +61,7 @@ while True:
             bx = "b" + str(r.randint(1, 4))
         else:
             bx = "b" + str(cards.index(card))
-            
+
         deck.build[bx].append(card)
 
         if pile == 's':
