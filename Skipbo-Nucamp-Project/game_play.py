@@ -24,14 +24,18 @@ def mrComputer(deck, dk, player0, player1):
 def player1_prompt(deck, dk, player0, player1):
     while True:
 
+        print(game_display.display(deck, player0, player1))
         # which cards are playable on the build piles
         cards = deck.playable_cards()
-
+        print('playable_cards:', cards)
+        print('cards in possession:', [*player1.hand, *player1.top_discards(), player1.stock[-1]])
         # check that player has the card
         card = None
-        while (card not in [*player1.hand, *player1.top_discards(), player1.stock[-1]]) and (card not in cards):
+
+        while (card not in [*player1.hand, *player1.top_discards(), player1.stock[-1]]) or (card not in cards):
+            print((card not in [*player1.hand, *player1.top_discards(), player1.stock[-1]]) and (card not in cards))
             print("Enter 'discard' if you would like to discard.")
-            card = input("Which card would you like to play? Enter 1-12 or skb: ").lower()
+            card = input("Which card would you like to play? Enter 1-12 or skb: \n").lower()
             if card == "discard":
                 break
 
@@ -42,15 +46,18 @@ def player1_prompt(deck, dk, player0, player1):
         pile = None
         while pile not in ['s','h','d']:
             print("Enter 'discard' if you would like to discard.")
-            pile = input("Which pile would you like to play? Enter s, h or d: ").lower()
+            pile = input("Which pile would you like to play? Enter s, h or d: \n").lower()
             if pile == 's' and card != player1.stock[-1]:
                 print('Wrong pile...')
+                pile = None
                 continue
             elif pile == 'h' and card not in player1.hand:
                 print('Wrong pile...')
+                pile = None
                 continue                
             elif pile == 'd' and card not in player1.top_discards():
                 print('Wrong pile...')
+                pile = None
                 continue    
             elif pile == 'discard':
                 break

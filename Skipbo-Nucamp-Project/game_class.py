@@ -4,7 +4,7 @@ import random as r
 
 # DECK Class -------------------------------------------------------------------------------
 class deck:
-    def __init__(self) -> None:
+    def __init__(self):
         self.build = {"b1": ['0'], "b2": ['0'], "b3": ['0'], "b4": ['0']}
 
     def playable_cards(self):
@@ -112,7 +112,7 @@ class player:
         self.discard_pile[dx].append(card)
         self.hand.remove(card)
 
-def play_build(self, deck, dk, card, pile):
+    def play_build(self, deck, dk, card, pile):
         """
         removes card from player and adds to build pile
         self (object) is either player0 or player1
@@ -150,7 +150,7 @@ def play_build(self, deck, dk, card, pile):
                 bx = "b" + str(int(cards.index(card)))
         #---------------------------------------------------------------------
 
-        # add card to build pile
+        # add card to build pile and change it's value to a number
         if card == 'skb':
             card_num = int(deck.build[bx][-1])
             card_str = str(card_num + 1)

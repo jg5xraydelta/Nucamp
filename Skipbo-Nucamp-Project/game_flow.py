@@ -37,7 +37,7 @@ while True:
     player1.generate_stock(dk)
     print("Deck has been shuffled.  Players have been dealt 30 cards each for their stock pile.")
 
-    ################################################################# GAME PLAY
+    ################################################################# GAME PROCEDURE
     # player wins when all stock cards have been played
     while len(player0.stock) > 0 and len(player1.stock) > 0:
 
