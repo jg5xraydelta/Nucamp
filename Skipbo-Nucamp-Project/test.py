@@ -1,5 +1,6 @@
-import skipbo_mods
+import game_class
 
+######### various tests for functions
 """ build = {"b1": ['1', '2'], "b2": ['3', '4'],
          "b3": ['5', '6'], "b4": ['7', '8']}
 card = [int(max(i)) + 1 for i in list(build.values())]
@@ -30,7 +31,10 @@ print(a.discard_pile) """
 """ list = []
 print(list[-1]) """
 
-while True:
+
+
+####################  trying to improve procedure for playing on the build piles
+""" while True:
         print(game_display.display(deck, player0, player1))
         print("Enter 'discard' if you would like to discard.")
 
@@ -70,5 +74,5 @@ while True:
             self.hand.remove(card)
         elif pile == 'd':
             dx = "d" + str(self.top_discards().index(card) + 1)
-            self.discard_pile[dx].remove(card)
+            self.discard_pile[dx].remove(card) """
 

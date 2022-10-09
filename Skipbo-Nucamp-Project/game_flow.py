@@ -1,17 +1,17 @@
 from game_play import mrComputer, player1_prompt
-import skipbo_mods
+import game_class
 import random as r
 
 while True:
-    # Prompt player name and ask if they would like to play.
+    ################################################################# GAME SETUP
+    # initiate mrComputer 
+    player0 = game_class.player("mrComputer")
     player1 = input("What is your name?  ")
-    player1 = skipbo_mods.player(player1)
+    player1 = game_class.player(player1)
 
-    # initiate computer player
-    player0 = skipbo_mods.player("mrComputer")
-
+    # Prompt player name and ask if they would like to play.
     print("Would you like to play a game", player1.name + "?")
-    print("Don worry ", player1.name, " the game is called skipbo!")
+    print("Don't worry ", player1.name, " the game is called... skipbo!")
     response = input("Yes or No? ")
 
     if response in ["No", "no", "N", "n"]:
@@ -30,20 +30,21 @@ while True:
         print(player0.name, "goes first... womp, womp, wooomp")
 
     # Generate the deck and each players stock pile
-    deck = skipbo_mods.deck()
+    deck = game_class.deck()
     dk = deck.generate_deck_iter()
 
     player0.generate_stock(dk)
     player1.generate_stock(dk)
     print("Deck has been shuffled.  Players have been dealt 30 cards each for their stock pile.")
 
+    ################################################################# GAME PLAY
     # player wins when all stock cards have been played
     while len(player0.stock) > 0 and len(player1.stock) > 0:
 
         # mrComputer's turn ---------------------------------------------------
         while player_control == 0:
 
-            # mrComputer needs refill hand
+            # mrComputer needs to re/fill hand
             player0.draw(dk)
 
             # mrComputer checks for a play
@@ -63,12 +64,14 @@ while True:
 
         # player1's turn -----------------------------------------------------
         while player_control == 1:
+
+            # player1 needs to re/fill hand
             player1.draw(dk)
             
             # player1 checks for a play
             player1_prompt(deck, dk, player0, player1)
                         
-            # check if stock pile is empty and mrComputer wins
+            # check if stock pile is empty and player1 wins
             if len(player1.stock) == 0:
                 break
 
@@ -81,6 +84,7 @@ while True:
         
         #----------------------------------------------------------------------
 
+    ################################################################# GAME ENDING    
     # decide winner
     if len(player0.stock) == 0:
         print("mrComputer wins!")
