@@ -1,5 +1,4 @@
 import random as r
-from this import d
 
 
 class deck:
@@ -107,24 +106,32 @@ class player:
         # find locations of cards to be played and build pile destination
         if self.name == 'mrComputer':
             pile = self.card_pile(card)
-
-        if card == 'skb':
-            bx = "b" + str(r.randint(1, 4))
+            if card == 'skb':
+                bx = "b" + str(r.randint(1, 4))
+            else:
+                bx = "b" + str(int(cards.index(card)))
         else:
-            bx = "b" + str(cards.index(card))
+            bx = input("Which build pile would you like to play? Enter 1-4: ")
+            if card == 'skb':
+                while bx not in ['1', '2', '3', '4']:
+                    print("Invalid entry.  Try again...")
+                    bx = input(
+                        "Which build pile would you like to play the skb? Enter 1-4: ")
+            else:
+                bx = "b" + str(int(cards.index(card)))
 
-        
         # add card to build pile
         if card == 'skb':
-            card_num = deck.build[bx][-1]
-            deck.build[bx].append(card_num)
+            card_num = int(deck.build[bx][-1])
+            card_str = str(card_num + 1)
+            deck.build[bx].append(card_str)
         else:
             deck.build[bx].append(card)
 
         # check for a build pile that ends in 12
         while deck.check_completed_build():
             bx = deck.check_completed_build()
-            generate_deck_iter(self, dk, bx)
+            deck.generate_deck_iter(self, dk, bx)
 
         # remove card from stock, hand, discards
         if pile == 's':
@@ -134,7 +141,6 @@ class player:
         elif pile == 'd':
             dx = "d" + str(self.top_discards().index(card) + 1)
             self.discard_pile[dx].remove(card)
-
 
     def discard(self, card, dx):
         """
