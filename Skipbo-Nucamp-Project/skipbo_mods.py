@@ -8,11 +8,7 @@ class deck:
     def playable_cards(self):
         cards = ['skb']
         for bcards in list(self.build.values()):
-            cnt = -1
-            while bcards[cnt] == 'skb':
-                cnt -= 1
-
-            p_card = str(int(bcards[cnt])-cnt)
+            p_card = str(int(bcards[-1]) + 1)
             cards.append(p_card)
 
         return cards
@@ -111,8 +107,8 @@ class player:
             else:
                 bx = "b" + str(int(cards.index(card)))
         else:
-            bx = input("Which build pile would you like to play? Enter 1-4: ")
             if card == 'skb':
+                bx = input("Which build pile would you like to play? Enter 1-4: ")
                 while bx not in ['1', '2', '3', '4']:
                     print("Invalid entry.  Try again...")
                     bx = input(
@@ -135,7 +131,7 @@ class player:
 
         # remove card from stock, hand, discards
         if pile == 's':
-            self.stock.remove(card)
+            self.stock.pop(-1)
         elif pile == 'h':
             self.hand.remove(card)
         elif pile == 'd':

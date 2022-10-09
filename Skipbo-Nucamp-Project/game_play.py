@@ -34,8 +34,8 @@ def player1_prompt(deck, dk, player0, player1):
         # find the right pile to remove it from
         pile = 'x'
         while pile not in ['s','h','d']:
-            print("Enter 'discard' if you would like to discard.")
-            pile = input("Which pile would you like to play? Enter s, h or d:").lower()
+            print("Enter 'discard' if you would like to discard. ")
+            pile = input("Which pile would you like to play? Enter s, h or d: ").lower()
             if pile == 's' and card != player1.stock[-1]:
                 print('Wrong pile...')
                 continue
@@ -47,9 +47,6 @@ def player1_prompt(deck, dk, player0, player1):
                 continue    
             elif pile == 'discard':
                 break
-            else:
-                print('No such pile...')
-                continue
 
         if pile == 'discard':
             break
